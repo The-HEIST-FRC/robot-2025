@@ -7,6 +7,8 @@ package frc.robot;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -23,6 +25,31 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  double startTime;
+  double currentTime;
+  double actualTime;
+
+  private final Spark leftMotor1 = new Spark(0);
+  private final Spark leftMotor2 = new Spark(1);
+  private final Spark rightMotor1 = new Spark(2);
+  private final Spark rightMotor2 = new Spark(3);
+
+  public void BothLeftMotors(double speed) {
+    // Ensure speed is between 0 and 1
+    speed = Math.max(0, Math.min(1, speed));
+
+    // Set speed to both motors
+    leftMotor1.set(speed);
+    leftMotor2.set(speed);
+  }
+  public void BothRightMotors(double speed) {
+    // Ensure speed is between 0 and 1
+    speed = Math.max(0, Math.min(1, speed));
+
+    // Set speed to both motors
+    rightMotor1.set(speed);
+    rightMotor2.set(speed);
+  }
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -77,17 +104,25 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    /*m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
-    }
+    }*/
+    startTime = Timer.getFPGATimestamp();
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+    currentTime = Timer.getFPGATimestamp();
+    actualTime = currentTime - startTime;
+
+    if (actualTime > 2 && actualTime < 3) {
+      BothLeftMotors(0.1);
+      BothRightMotors(0.1);
+    }
   }
 
   @Override
