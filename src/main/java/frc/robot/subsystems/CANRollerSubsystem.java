@@ -24,6 +24,8 @@ public class CANRollerSubsystem extends SubsystemBase {
     public static final int ROLLER_MOTOR_CURRENT_LIMIT = 60;
     public static final double ROLLER_MOTOR_VOLTAGE_COMP = 10;
     public static final double ROLLER_EJECT_VALUE = 0.44;
+    //The speed of the roller, from -1 to 1
+    public static final double ROLLER_SPEED_CONSTANT = 0.5;
   }
 
   public CANRollerSubsystem() {
@@ -53,7 +55,7 @@ public class CANRollerSubsystem extends SubsystemBase {
   public Command runRoller(
       CANRollerSubsystem rollerSubsystem, DoubleSupplier forward, DoubleSupplier reverse) {
     return Commands.run(
-        () -> rollerMotor.set(forward.getAsDouble() - reverse.getAsDouble()), rollerSubsystem);
+        () -> rollerMotor.set(forward.getAsDouble() - reverse.getAsDouble() * RollerConstants.ROLLER_SPEED_CONSTANT), rollerSubsystem);
   }
 
 }
