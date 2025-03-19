@@ -38,6 +38,7 @@ public class RobotContainer {
     // autoChooser.addOption
     //autoChooser.setDefaultOption("Autonomous", Autos.exampleAuto(driveSubsystem, rollerSubsystem));
     autoChooser.setDefaultOption("Autonomous", Autos.rightScore(driveSubsystem, rollerSubsystem));
+    //autoChooser.setDefaultOption("Autonomous", Autos.rightScoreCoral(driveSubsystem, rollerSubsystem));
   }
 
   /**

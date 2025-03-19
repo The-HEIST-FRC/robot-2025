@@ -23,8 +23,22 @@ public final class Autos {
     return new SequentialCommandGroup(
             driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(3),
             driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> 1, () -> 0.5).withTimeout(1),
-            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(2),
             rollerSubsystem.runRoller(rollerSubsystem, () -> 0.5, () -> 0, () -> 0.5).withTimeout(1.5)
     );
+  }
+
+  public static final Command rightScoreCoral(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
+    return new SequentialCommandGroup(
+      driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(3),
+      driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> 1, () -> 0.5).withTimeout(1),
+      driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(1),
+      rollerSubsystem.runRoller(rollerSubsystem, () -> 0.5, () -> 0, () -> 0.5).withTimeout(1.5),
+      driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.5).withTimeout(1),
+      driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> -1, () -> 0.5).withTimeout(1)
+            //driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(3),
+            //driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> 1, () -> 0.5).withTimeout(1.5),
+            //driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.5).withTimeout(5)
+            );
   }
 }
