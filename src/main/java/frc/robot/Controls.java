@@ -10,9 +10,6 @@ public class Controls {
       public static final int OPERATOR_CONTROLLER_PORT = 1;
     }
 
-    //Testing GITHUB
-    //Testing Github 2
-
     // The driver's controller
     private static final CommandXboxController driverController = new CommandXboxController(
         ControlConstants.DRIVER_CONTROLLER_PORT);
@@ -39,7 +36,7 @@ public class Controls {
     // Set the A button to run the "runRoller" command from the factory with a fixed
     // value ejecting the gamepiece while the button is held
     driverController.rightBumper()
-        .whileTrue(bot.rollerSubsystem.runRoller(bot.rollerSubsystem, () -> RollerConstants.ROLLER_EJECT_VALUE, () -> 0));
+        .whileTrue(bot.rollerSubsystem.runRoller(bot.rollerSubsystem, () -> RollerConstants.ROLLER_EJECT_VALUE, () -> 0, () -> 1));
 
     // Set the default command for the drive subsystem to the command provided by
     // factory with the values provided by the joystick axes on the driver
@@ -55,7 +52,8 @@ public class Controls {
         bot.rollerSubsystem.runRoller(
             bot.rollerSubsystem,
             () -> driverController.getRightTriggerAxis(),
-            () -> driverController.getLeftTriggerAxis()));
+            () -> driverController.getLeftTriggerAxis(),
+            () -> (driverController.leftBumper().getAsBoolean() ? 0.3 : 0.6)));
   }
     
 }
