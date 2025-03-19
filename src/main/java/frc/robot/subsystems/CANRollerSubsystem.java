@@ -53,7 +53,7 @@ public class CANRollerSubsystem extends SubsystemBase {
   public Command runRoller(
       CANRollerSubsystem rollerSubsystem, DoubleSupplier forward, DoubleSupplier reverse, DoubleSupplier rollerSpeed) {
     return Commands.run(
-        () -> rollerMotor.set(forward.getAsDouble() - reverse.getAsDouble() * rollerSpeed.getAsDouble()), rollerSubsystem);
+        () -> rollerMotor.set((forward.getAsDouble() - reverse.getAsDouble()) * rollerSpeed.getAsDouble()), rollerSubsystem);
   }
 
 }
