@@ -45,7 +45,7 @@ public class Controls {
     // value)
     bot.driveSubsystem.setDefaultCommand(
         bot.driveSubsystem.driveArcade(
-            bot.driveSubsystem, () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> (driverController.leftBumper().getAsBoolean() ? 1 : 0.7)));
+            bot.driveSubsystem, () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> (driverController.leftBumper().getAsBoolean() ? 0.7 : 1)));
     // Set the default command for the roller subsystem to the command from the
     // factory with the values provided by the triggers on the operator controller
     bot.rollerSubsystem.setDefaultCommand(
