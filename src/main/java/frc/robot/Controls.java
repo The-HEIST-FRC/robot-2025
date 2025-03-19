@@ -36,7 +36,7 @@ public class Controls {
     // Set the A button to run the "runRoller" command from the factory with a fixed
     // value ejecting the gamepiece while the button is held
     driverController.rightBumper()
-        .whileTrue(bot.rollerSubsystem.runRoller(bot.rollerSubsystem, () -> RollerConstants.ROLLER_EJECT_VALUE, () -> 0, () -> 1));
+        .whileTrue(bot.rollerSubsystem.runRoller(bot.rollerSubsystem, () -> RollerConstants.ROLLER_EJECT_VALUE, () -> 0, () -> false));
 
     // Set the default command for the drive subsystem to the command provided by
     // factory with the values provided by the joystick axes on the driver
@@ -53,7 +53,7 @@ public class Controls {
             bot.rollerSubsystem,
             () -> driverController.getRightTriggerAxis(),
             () -> driverController.getLeftTriggerAxis(),
-            () -> (driverController.leftBumper().getAsBoolean() ? 0.3 : 0.6)));
+            () -> driverController.leftBumper().getAsBoolean()));
   }
     
 }

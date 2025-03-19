@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import com.revrobotics.spark.SparkMax;
@@ -49,11 +51,17 @@ public class CANRollerSubsystem extends SubsystemBase {
   public void periodic() {
   }
 
+  boolean slowSwitch = false;
   // Command to run the roller with joystick inputs
   public Command runRoller(
-      CANRollerSubsystem rollerSubsystem, DoubleSupplier forward, DoubleSupplier reverse, DoubleSupplier rollerSpeed) {
+      CANRollerSubsystem rollerSubsystem, DoubleSupplier forward, DoubleSupplier reverse, BooleanSupplier slowDown) {
+    if(slowDown.getAsBoolean()) {
+      slowSwitch = !slowSwitch;
+      System.out.println("Slow Switch: " + slowSwitch);
+    }
+
     return Commands.run(
-        () -> rollerMotor.set(forward.getAsDouble() - reverse.getAsDouble() * rollerSpeed.getAsDouble()), rollerSubsystem);
+        () -> rollerMotor.set((forward.getAsDouble() - reverse.getAsDouble()) * (slowSwitch ? 0.3 : 0.6)), rollerSubsystem);
   }
 
 }
