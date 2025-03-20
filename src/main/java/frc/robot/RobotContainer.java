@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.Autos;
 import frc.robot.subsystems.CANDriveSubsystem;
@@ -36,9 +37,11 @@ public class RobotContainer {
     // Set the options to show up in the Dashboard for selecting auto modes. If you
     // add additional auto modes you can add additional lines here with
     // autoChooser.addOption
-    //autoChooser.setDefaultOption("Autonomous", Autos.exampleAuto(driveSubsystem, rollerSubsystem));
-    autoChooser.setDefaultOption("Autonomous", Autos.rightScore(driveSubsystem, rollerSubsystem));
-    //autoChooser.setDefaultOption("Autonomous", Autos.rightScoreCoral(driveSubsystem, rollerSubsystem));
+    autoChooser.addOption("Middle", Autos.exampleAuto(driveSubsystem, rollerSubsystem));
+    autoChooser.setDefaultOption("RightScore", Autos.rightScore(driveSubsystem, rollerSubsystem));
+    autoChooser.addOption("Rightscorecoral", Autos.rightScoreCoral(driveSubsystem, rollerSubsystem));
+  
+    SmartDashboard.putData("Auto Position", autoChooser);
   }
 
   /**

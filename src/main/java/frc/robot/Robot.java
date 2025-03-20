@@ -51,6 +51,8 @@ public class Robot extends TimedRobot {
   double currentTime;
   double actualTime;
 
+  private Command autoCommand;
+
   private final Spark leftMotor1 = new Spark(0);
   private final Spark leftMotor2 = new Spark(1);
   private final Spark rightMotor1 = new Spark(2);
@@ -84,6 +86,7 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    
 
     // Used to track usage of Kitbot code, please do not remove.
     HAL.report(tResourceType.kResourceType_Framework, 10);
@@ -259,13 +262,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    currentTime = Timer.getFPGATimestamp();
-    actualTime = currentTime - startTime;
-
-    if (actualTime > 2 && actualTime < 3) {
-      BothLeftMotors(0.1);
-      BothRightMotors(0.1);
-    }
+    
   }
 
   @Override
