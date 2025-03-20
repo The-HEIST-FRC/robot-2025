@@ -54,6 +54,14 @@ public class Controls {
             () -> driverController.getRightTriggerAxis(),
             () -> driverController.getLeftTriggerAxis(),
             () -> (driverController.leftBumper().getAsBoolean() ? 0.7 : 0.4)));
+
+
+
+      new Trigger(() -> driverController.a().getAsBoolean()).onTrue(bot.driveSubsystem.turn180());
+      new Trigger(() -> driverController.b().getAsBoolean()).onTrue(bot.driveSubsystem.handbrake());
+      new Trigger(() -> driverController.x().getAsBoolean()).onTrue(bot.driveSubsystem.guardIntake());
+      new Trigger(() -> driverController.y().getAsBoolean()).onTrue(bot.driveSubsystem.beyblade());
+
   }
     
 }

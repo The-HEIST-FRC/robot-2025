@@ -82,6 +82,33 @@ public class CANDriveSubsystem extends SubsystemBase {
   public void periodic() {
   }
 
+  public Command turn180() {
+    return Commands.runOnce(() -> drive.arcadeDrive(0, 1.0), this)
+            .andThen(Commands.waitSeconds(0.5))  // Adjust time for a full 180 turn
+            .andThen(() -> drive.arcadeDrive(0, 0));  // Stop the robot after turning
+  }
+
+  public Command handbrake() {
+      return Commands.runOnce(() -> drive.arcadeDrive(0, 0), this)  // Immediately stop the robot
+              .andThen(Commands.waitSeconds(3.0))  // Hold the stop for 3 seconds
+              .andThen(() -> drive.arcadeDrive(0, 0))  // Ensure it stays stopped
+              .until(() -> false);  // Prevent interruptions from other commands
+  }
+
+  public Command guardIntake() {
+    return Commands.runOnce(() -> drive.arcadeDrive(0.5, 0), this)
+            .andThen(Commands.waitSeconds(1))
+            .andThen(() -> drive.arcadeDrive(-0.5, 0))
+            .andThen(Commands.waitSeconds(1))
+            .andThen(() -> drive.arcadeDrive(0, 0)); // Ensure it stays stopped
+  }
+
+  public Command beyblade() {
+    return Commands.runOnce(() -> drive.arcadeDrive(0, 1.0), this)
+            .andThen(Commands.waitSeconds(3))  // Adjust time for a full 180 turn
+            .andThen(() -> drive.arcadeDrive(0, 0));  // Stop the robot after turning
+  }
+
   // Command to drive the robot with joystick inputs
   public Command driveArcade(
       CANDriveSubsystem driveSubsystem, DoubleSupplier xSpeed, DoubleSupplier zRotation, DoubleSupplier robotSpeed) {
