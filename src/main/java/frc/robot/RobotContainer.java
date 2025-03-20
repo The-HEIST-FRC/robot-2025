@@ -39,7 +39,9 @@ public class RobotContainer {
     // autoChooser.addOption
     autoChooser.addOption("Middle", Autos.exampleAuto(driveSubsystem, rollerSubsystem));
     autoChooser.setDefaultOption("RightScore", Autos.rightScore(driveSubsystem, rollerSubsystem));
-    autoChooser.addOption("Rightscorecoral", Autos.rightScoreCoral(driveSubsystem, rollerSubsystem));
+    autoChooser.setDefaultOption("LeftScore", Autos.leftScore(driveSubsystem, rollerSubsystem));
+
+    //autoChooser.addOption("Rightscorecoral", Autos.rightScoreCoral(driveSubsystem, rollerSubsystem));
   
     SmartDashboard.putData("Auto Position", autoChooser);
   }

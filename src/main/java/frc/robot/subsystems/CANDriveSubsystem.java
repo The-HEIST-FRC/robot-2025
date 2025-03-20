@@ -83,9 +83,7 @@ public class CANDriveSubsystem extends SubsystemBase {
   }
 
   public Command turn180() {
-    return Commands.runOnce(() -> drive.arcadeDrive(0, 1.0), this)
-            .andThen(Commands.waitSeconds(0.5))  // Adjust time for a full 180 turn
-            .andThen(() -> drive.arcadeDrive(0, 0));  // Stop the robot after turning
+    return Commands.run(() -> drive.arcadeDrive(0, 1), this).withTimeout(1);  // Immediately stop the robot
   }
 
   public Command handbrake() {
@@ -104,8 +102,15 @@ public class CANDriveSubsystem extends SubsystemBase {
   }
 
   public Command beyblade() {
+    return Commands.run(() -> drive.arcadeDrive(0, 1), this).withTimeout(3);  // Immediately stop the robot
+
+  }
+
+  public Command wiggle() {
     return Commands.runOnce(() -> drive.arcadeDrive(0, 1.0), this)
-            .andThen(Commands.waitSeconds(3))  // Adjust time for a full 180 turn
+            .andThen(Commands.waitSeconds(1))
+            .andThen(() -> drive.arcadeDrive(0, -1))
+            .andThen(Commands.waitSeconds(1))
             .andThen(() -> drive.arcadeDrive(0, 0));  // Stop the robot after turning
   }
 

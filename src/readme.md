@@ -11,5 +11,4 @@ Left Trigger: Spin roller the other way
 
 A - Turn 180
 B - Handbrake (Stop the bot for 3 seconds, controls cannot be taken back until the timer is finished)
-X - Guard Intake (Go forward and backwards)
-Y - Bayblade
+Y - Spin the roller the other way (for 3 seconds, used to get the coral out)

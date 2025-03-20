@@ -20,8 +20,17 @@ public final class Autos {
 
   public static final Command rightScore(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
     return new SequentialCommandGroup(
-            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(3.5),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(2.5),
             driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> 1, () -> 0.5).withTimeout(1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(2),
+            rollerSubsystem.runRoller(rollerSubsystem, () -> 0.5, () -> 0, () -> 0.5).withTimeout(1.5)
+    );
+  }
+
+  public static final Command leftScore(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
+    return new SequentialCommandGroup(
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(2.5),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> -1, () -> 0.5).withTimeout(1),
             driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(2),
             rollerSubsystem.runRoller(rollerSubsystem, () -> 0.5, () -> 0, () -> 0.5).withTimeout(1.5)
     );

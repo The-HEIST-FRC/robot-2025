@@ -115,13 +115,15 @@ public class Robot extends TimedRobot {
       
       // Get the UsbCamera from CameraServer
       UsbCamera camera = CameraServer.startAutomaticCapture();
+
+      Integer resolutionMultyplier = 1;
       // Set the resolution
-      camera.setResolution(640, 480);
+      camera.setResolution(640 *resolutionMultyplier, 480*resolutionMultyplier);
       
       // Get a CvSink. This will capture Mats from the camera
       CvSink cvSink = CameraServer.getVideo();
       // Setup a CvSource. This will send images back to the Dashboard
-      CvSource outputStream = CameraServer.putVideo("Detected", 640, 480);
+      CvSource outputStream = CameraServer.putVideo("Detected", 640*resolutionMultyplier, 480*resolutionMultyplier);
       
       // Mats are very memory expensive. Lets reuse these.
       var mat = new Mat();
@@ -259,7 +261,7 @@ public class Robot extends TimedRobot {
     startTime = Timer.getFPGATimestamp();
   }
 
-  
+
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
