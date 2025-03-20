@@ -43,9 +43,15 @@ public class Controls {
     // controller. The Y axis of the controller is inverted so that pushing the
     // stick away from you (a negative value) drives the robot forwards (a positive
     // value)
+
     bot.driveSubsystem.setDefaultCommand(
-        bot.driveSubsystem.driveArcade(
-            bot.driveSubsystem, () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> (driverController.leftBumper().getAsBoolean() ? 0.7 : 1)));
+    bot.driveSubsystem.driveArcade(
+        bot.driveSubsystem, 
+        () -> applyThrottleCurve(-driverController.getLeftY()), 
+        () -> applyThrottleCurve(-driverController.getRightX()), 
+        () -> (driverController.leftBumper().getAsBoolean() ? 0.7 : 1))
+    );
+
     // Set the default command for the roller subsystem to the command from the
     // factory with the values provided by the triggers on the operator controller
     bot.rollerSubsystem.setDefaultCommand(
@@ -61,7 +67,10 @@ public class Controls {
       new Trigger(() -> driverController.b().getAsBoolean()).onTrue(bot.driveSubsystem.handbrake());
       new Trigger(() -> driverController.x().getAsBoolean()).onTrue(bot.driveSubsystem.guardIntake());
       new Trigger(() -> driverController.y().getAsBoolean()).onTrue(bot.driveSubsystem.beyblade());
+    }
 
-  }
-    
+    private static double applyThrottleCurve(double input) {
+        double a = 0.3; // Adjust smoothness (0 = linear, 1 = full cubic)
+        return (1 - a) * input + a * Math.pow(input, 3);
+    }
 }
