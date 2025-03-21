@@ -38,6 +38,7 @@ public class RobotContainer {
     // add additional auto modes you can add additional lines here with
     // autoChooser.addOption
     autoChooser.addOption("Middle", Autos.exampleAuto(driveSubsystem, rollerSubsystem));
+    autoChooser.addOption("ForwardNoScore", Autos.goForwardNoScore(driveSubsystem, rollerSubsystem));
     autoChooser.setDefaultOption("RightScore", Autos.rightScore(driveSubsystem, rollerSubsystem));
     autoChooser.setDefaultOption("LeftScore", Autos.leftScore(driveSubsystem, rollerSubsystem));
 

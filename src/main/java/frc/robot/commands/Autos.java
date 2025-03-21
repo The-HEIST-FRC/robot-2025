@@ -18,6 +18,12 @@ public final class Autos {
     );
   }
 
+  public static final Command goForwardNoScore(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
+    return new SequentialCommandGroup(
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(4)
+    );
+  }
+
   public static final Command rightScore(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
     return new SequentialCommandGroup(
             driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(2.5),
