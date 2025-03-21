@@ -58,8 +58,8 @@ public class Controls {
 
 
       new Trigger(() -> driverController.a().getAsBoolean()).onTrue(bot.driveSubsystem.turn180());
-      new Trigger(() -> driverController.b().getAsBoolean()).onTrue(bot.driveSubsystem.handbrake());
-      new Trigger(() -> driverController.y().getAsBoolean()).onTrue(bot.rollerSubsystem.moveCoral());
+      new Trigger(() -> driverController.x().getAsBoolean()).onTrue(bot.driveSubsystem.handbrake());
+      new Trigger(() -> driverController.b().getAsBoolean()).onTrue(bot.rollerSubsystem.moveCoral());
 
   }
     
