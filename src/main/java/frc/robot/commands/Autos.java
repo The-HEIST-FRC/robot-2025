@@ -34,7 +34,8 @@ public final class Autos {
   public static final Command scoreRightIntake(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
     return new SequentialCommandGroup(
             driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(4),
-            rollerSubsystem.runRoller(rollerSubsystem, () -> 0.8, () -> 0, () -> 0.5).withTimeout(1.5),
+            rollerSubsystem.runRoller(rollerSubsystem, () -> 0.8, () -> 0, () -> 0.5).withTimeout(1),
+            rollerSubsystem.runRoller(rollerSubsystem, () -> 0, () -> 0, () -> 0.5).withTimeout(0.3),
             driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.5).withTimeout(1),
             driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> 1, () -> 0.5).withTimeout(1.3),
             driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(3),
