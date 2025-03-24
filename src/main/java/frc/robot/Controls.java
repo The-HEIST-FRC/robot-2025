@@ -32,6 +32,7 @@ public class Controls {
    * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
+
   public static void configureBindings(RobotContainer bot) {
     // Set the A button to run the "runRoller" command from the factory with a fixed
     // value ejecting the gamepiece while the button is held
@@ -54,6 +55,13 @@ public class Controls {
             () -> driverController.getRightTriggerAxis(),
             () -> driverController.getLeftTriggerAxis(),
             () -> (driverController.leftBumper().getAsBoolean() ? 0.7 : 0.4)));
+
+
+
+      new Trigger(() -> driverController.a().getAsBoolean()).onTrue(bot.driveSubsystem.turn180());
+      new Trigger(() -> driverController.x().getAsBoolean()).onTrue(bot.driveSubsystem.handbrake());
+      new Trigger(() -> driverController.b().getAsBoolean()).onTrue(bot.rollerSubsystem.moveCoral());
+
   }
     
 }

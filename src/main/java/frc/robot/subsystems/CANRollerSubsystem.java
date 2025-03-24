@@ -49,6 +49,15 @@ public class CANRollerSubsystem extends SubsystemBase {
   public void periodic() {
   }
 
+
+  public Command moveCoral() {
+    return Commands.runOnce(() -> rollerMotor.set(-0.7), this)
+            .andThen(Commands.waitSeconds(1.5))  // Adjust time for a full 180 turn
+            .andThen(() -> rollerMotor.set(-0.3))
+            .andThen(Commands.waitSeconds(1.2))  // Adjust time for a full 180 turn
+            .andThen(() -> rollerMotor.set(0));  // Stop the robot after turning
+  }
+
   // Command to run the roller with joystick inputs
   public Command runRoller(
       CANRollerSubsystem rollerSubsystem, DoubleSupplier forward, DoubleSupplier reverse, DoubleSupplier rollerSpeed) {
