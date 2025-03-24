@@ -36,31 +36,41 @@ public class Controls {
   public static void configureBindings(RobotContainer bot) {
     // Set the A button to run the "runRoller" command from the factory with a fixed
     // value ejecting the gamepiece while the button is held
+    driverController.a()
+        .whileTrue(bot.rollerSubsystem.runRoller(bot.rollerSubsystem, () -> RollerConstants.ROLLER_EJECT_VALUE, () -> 0, () -> 1));
+
     driverController.rightBumper()
         .whileTrue(bot.rollerSubsystem.runRoller(bot.rollerSubsystem, () -> RollerConstants.ROLLER_EJECT_VALUE, () -> 0, () -> 1));
 
-    // Set the default command for the drive subsystem to the command provided by
+      driverController.b()
+              .whileTrue(bot.rollerSubsystem.runRoller(bot.rollerSubsystem, () -> 0.7, () -> 0, () -> 1));
+
+      driverController.leftBumper()
+        .whileTrue(bot.rollerSubsystem.runRoller(bot.rollerSubsystem, () -> -0.7, () -> 0, () -> 1));
+
+
+      // Set the default command for the drive subsystem to the command provided by
     // factory with the values provided by the joystick axes on the driver
     // controller. The Y axis of the controller is inverted so that pushing the
     // stick away from you (a negative value) drives the robot forwards (a positive
     // value)
     bot.driveSubsystem.setDefaultCommand(
         bot.driveSubsystem.driveArcade(
-            bot.driveSubsystem, () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> (driverController.leftBumper().getAsBoolean() ? 0.7 : 1)));
+            bot.driveSubsystem, () -> (driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()), () -> -driverController.getLeftX(), () -> (driverController.y().getAsBoolean() ? 0.7 : 1)));
     // Set the default command for the roller subsystem to the command from the
     // factory with the values provided by the triggers on the operator controller
-    bot.rollerSubsystem.setDefaultCommand(
-        bot.rollerSubsystem.runRoller(
-            bot.rollerSubsystem,
-            () -> driverController.getRightTriggerAxis(),
-            () -> driverController.getLeftTriggerAxis(),
-            () -> (driverController.leftBumper().getAsBoolean() ? 0.7 : 0.4)));
+//    bot.rollerSubsystem.setDefaultCommand(
+//        bot.rollerSubsystem.runRoller(
+//            bot.rollerSubsystem,
+//            () -> driverController.getRightTriggerAxis(),
+//            () -> driverController.getLeftTriggerAxis(),
+//            () -> (driverController.leftBumper().getAsBoolean() ? 0.7 : 0.4)));
 
 
 
-      new Trigger(() -> driverController.a().getAsBoolean()).onTrue(bot.driveSubsystem.turn180());
+      //new Trigger(() -> driverController.a().getAsBoolean()).onTrue(bot.driveSubsystem.turn180());
       new Trigger(() -> driverController.x().getAsBoolean()).onTrue(bot.driveSubsystem.handbrake());
-      new Trigger(() -> driverController.b().getAsBoolean()).onTrue(bot.rollerSubsystem.moveCoral());
+      new Trigger(() -> driverController.povDown().getAsBoolean()).onTrue(bot.rollerSubsystem.moveCoral());
 
   }
     
