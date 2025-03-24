@@ -56,7 +56,7 @@ public class Controls {
     // value)
     bot.driveSubsystem.setDefaultCommand(
         bot.driveSubsystem.driveArcade(
-            bot.driveSubsystem, () -> (driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()), () -> -driverController.getLeftX(), () -> (driverController.y().getAsBoolean() ? 0.7 : 1)));
+            bot.driveSubsystem, () -> (applyThrottleCurve(driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis())), () -> applyThrottleCurve(-driverController.getLeftX()), () -> (driverController.y().getAsBoolean() ? 0.7 : 1)));
     // Set the default command for the roller subsystem to the command from the
     // factory with the values provided by the triggers on the operator controller
 //    bot.rollerSubsystem.setDefaultCommand(
@@ -72,6 +72,11 @@ public class Controls {
       new Trigger(() -> driverController.x().getAsBoolean()).onTrue(bot.driveSubsystem.handbrake());
       new Trigger(() -> driverController.povDown().getAsBoolean()).onTrue(bot.rollerSubsystem.moveCoral());
 
+
+
   }
-    
+    private static double applyThrottleCurve(double input) {
+        double a = 0.3; // Adjust smoothness (0 = linear, 1 = full cubic)
+        return (1 - a) * input + a * Math.pow(input, 3);
+    }
 }
