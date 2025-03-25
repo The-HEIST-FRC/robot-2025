@@ -104,7 +104,7 @@ public class Robot extends TimedRobot {
       // look for tag36h11, correct 1 error bit (hamming distance 1)
       // hamming 1 allocates 781KB, 2 allocates 27.4 MB, 3 allocates 932 MB
       // max of 1 recommended for RoboRIO 1, while hamming 2 is feasible on the RoboRIO 2
-      detector.addFamily("tag36h11", 1);
+      detector.addFamily("tag36h11",1); //tag16h5
       
       // Set up Pose Estimator - parameters are for a Microsoft Lifecam HD-3000
       // (https://www.chiefdelphi.com/t/wpilib-apriltagdetector-sample-code/421411/21)
@@ -123,7 +123,7 @@ public class Robot extends TimedRobot {
       // Get a CvSink. This will capture Mats from the camera
       CvSink cvSink = CameraServer.getVideo();
       // Setup a CvSource. This will send images back to the Dashboard
-      CvSource outputStream = CameraServer.putVideo("Detected", 640*resolutionMultyplier, 480*resolutionMultyplier);
+      CvSource outputStream = CameraServer.putVideo("Camera1", 640*resolutionMultyplier, 480*resolutionMultyplier);
       
       // Mats are very memory expensive. Lets reuse these.
       var mat = new Mat();
@@ -155,6 +155,8 @@ public class Robot extends TimedRobot {
           
           Imgproc.cvtColor(mat, grayMat, Imgproc.COLOR_RGB2GRAY);
           
+          CvSource outputStreamBW = CameraServer.putVideo("CameraBW", 640*resolutionMultyplier, 480*resolutionMultyplier);
+
           AprilTagDetection[] detections = detector.detect(grayMat);
           
           // have not seen any tags yet
@@ -193,6 +195,10 @@ public class Robot extends TimedRobot {
               
               // determine pose
               Transform3d pose = estimator.estimate(detection);
+              if (pose.getX() == 0 && pose.getY() == 0 && pose.getZ() == 0) {
+                  System.out.println("Skipping ambiguous tag pose.");
+                  continue;
+              }
               
               // put pose into dashboard
               Rotation3d rot = pose.getRotation();
@@ -202,6 +208,8 @@ public class Robot extends TimedRobot {
                               new double[] {
                                       pose.getX(), pose.getY(), pose.getZ(), rot.getX(), rot.getY(), rot.getZ()
                               });
+
+            System.out.println("id: " + detection.getId() + ", cx: " + cx + ", cy: " + cy);
           }
           
           // put list of tags onto dashboard
@@ -209,6 +217,7 @@ public class Robot extends TimedRobot {
           
           // Give the output stream a new image to display
           outputStream.putFrame(mat);
+          outputStreamBW.putFrame(grayMat);
       }
       
       pubTags.close();
