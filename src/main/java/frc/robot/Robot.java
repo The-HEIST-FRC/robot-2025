@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -33,6 +34,7 @@ import edu.wpi.first.networktables.IntegerArrayPublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+import com.kauailabs.navx.frc.AHRS;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -44,6 +46,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  * project.
  */
 public class Robot extends TimedRobot {
+  private AHRS navx;
+
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -95,7 +99,13 @@ public class Robot extends TimedRobot {
     var visionThread = new Thread(this::apriltagVisionThreadProc);
         visionThread.setDaemon(true);
         visionThread.start();
-  
+    
+
+    try {
+        navx = new AHRS(SPI.Port.kMXP);  // Use SPI (default)
+    } catch (RuntimeException ex) {
+        System.out.println("Error instantiating NavX: " + ex.getMessage());
+    }
   }
 
   void apriltagVisionThreadProc()
@@ -235,6 +245,12 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    if (navx != null) {
+      System.out.println("Yaw: " + navx.getYaw());  // Get yaw angle
+      System.out.println("Pitch: " + navx.getPitch());
+      System.out.println("Roll: " + navx.getRoll());
+    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
