@@ -74,7 +74,6 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   double startTime;
   double currentTime;
-  double actualTime;
 
   private Command autoCommand;
 
@@ -108,16 +107,17 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
 
-    led = new AddressableLED(LED_PORT);
-      ledBuffer = new AddressableLEDBuffer(LED_COUNT);
-      led.setLength(ledBuffer.getLength());
-      led.setData(ledBuffer);
-      led.start();
+
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    
+
+      led = new AddressableLED(LED_PORT);
+      ledBuffer = new AddressableLEDBuffer(LED_COUNT);
+      led.setLength(ledBuffer.getLength());
+      led.setData(ledBuffer);
+      led.start();
 
     // Used to track usage of Kitbot code, please do not remove.
     HAL.report(tResourceType.kResourceType_Framework, 10);
@@ -258,8 +258,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    runRainbowPattern();
-    led.setData(ledBuffer);
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or
@@ -315,6 +313,21 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+      currentTime = Timer.getFPGATimestamp();
+      if((currentTime - startTime) < 10){
+          runRainbowPattern();
+          led.setData(ledBuffer);
+      }else if((currentTime - startTime) < 30){
+          for (int i = 0; i < ledBuffer.getLength(); i++) {
+              ledBuffer.setHSV(i, 100, 255, 128); // HSV: (Hue, Saturation, Value)
+          }
+          led.setData(ledBuffer);
+      }else if((currentTime - startTime) < 50){
+          for (int i = 0; i < ledBuffer.getLength(); i++) {
+              ledBuffer.setHSV(i, 255, 100, 100); // HSV: (Hue, Saturation, Value)
+          }
+          led.setData(ledBuffer);
+      }
   }
 
   @Override
