@@ -6,9 +6,13 @@ package frc.robot;
 
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -33,6 +37,9 @@ import edu.wpi.first.networktables.IntegerArrayPublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -44,6 +51,24 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  * project.
  */
 public class Robot extends TimedRobot {
+  //LEDS
+  private static final int LED_PORT = 0; // DIO 0
+  private static final int LED_COUNT = 120; // Change to match your LED strip length
+
+  private AddressableLED led;
+  private AddressableLEDBuffer ledBuffer;
+  private int rainbowFirstPixelHue = 0;
+
+  private void runRainbowPattern() {
+      for (int i = 0; i < ledBuffer.getLength(); i++) {
+          int hue = (rainbowFirstPixelHue + (i * 180 / ledBuffer.getLength())) % 180;
+          ledBuffer.setHSV(i, hue, 255, 128); // HSV: (Hue, Saturation, Value)
+      }
+      rainbowFirstPixelHue += 3; // Change speed of rainbow shift
+      rainbowFirstPixelHue %= 180;
+  }
+  
+  
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -82,6 +107,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
+    led = new AddressableLED(LED_PORT);
+      ledBuffer = new AddressableLEDBuffer(LED_COUNT);
+      led.setLength(ledBuffer.getLength());
+      led.setData(ledBuffer);
+      led.start();
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
@@ -227,6 +258,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    runRainbowPattern();
+    led.setData(ledBuffer);
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or
