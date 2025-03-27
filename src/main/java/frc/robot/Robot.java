@@ -52,21 +52,14 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
  */
 public class Robot extends TimedRobot {
   //LEDS
-  private static final int LED_PORT = 0; // DIO 0
+  private static final int LED_PORT = 4; // DIO 0
   private static final int LED_COUNT = 120; // Change to match your LED strip length
 
   private AddressableLED led;
   private AddressableLEDBuffer ledBuffer;
   private int rainbowFirstPixelHue = 0;
 
-  private void runRainbowPattern() {
-      for (int i = 0; i < ledBuffer.getLength(); i++) {
-          int hue = (rainbowFirstPixelHue + (i * 180 / ledBuffer.getLength())) % 180;
-          ledBuffer.setHSV(i, hue, 255, 128); // HSV: (Hue, Saturation, Value)
-      }
-      rainbowFirstPixelHue += 3; // Change speed of rainbow shift
-      rainbowFirstPixelHue %= 180;
-  }
+  
   
   
   private Command m_autonomousCommand;
@@ -99,6 +92,25 @@ public class Robot extends TimedRobot {
     rightMotor2.set(speed);
   }
 
+  private void runRainbowPattern() {
+    for (int i = 0; i < ledBuffer.getLength(); i++) {
+        int hue = (rainbowFirstPixelHue + (i * 180 / ledBuffer.getLength())) % 180;
+        ledBuffer.setHSV(i, hue, 255, 128); // HSV: (Hue, Saturation, Value)
+    }
+    rainbowFirstPixelHue += 3; // Change speed of rainbow shift
+    rainbowFirstPixelHue %= 180;
+}
+
+private int greenPixelHue = 120;
+private void runYellowGreenPattern() {
+  for (int i = 0; i < ledBuffer.getLength(); i++) {
+      int hue = (30 + (i * greenPixelHue / ledBuffer.getLength())) % 60;
+      ledBuffer.setHSV(i, greenPixelHue + hue, 255, 128); // HSV: (Hue, Saturation, Value)
+  }
+  greenPixelHue += 1; // Change speed of rainbow shift
+  greenPixelHue = 30 + (greenPixelHue % 30);
+}
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -107,17 +119,18 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
 
+    led = new AddressableLED(LED_PORT);
+    ledBuffer = new AddressableLEDBuffer(LED_COUNT);
+    led.setLength(ledBuffer.getLength());
+    led.setData(ledBuffer);
+    led.start();
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-      led = new AddressableLED(LED_PORT);
-      ledBuffer = new AddressableLEDBuffer(LED_COUNT);
-      led.setLength(ledBuffer.getLength());
-      led.setData(ledBuffer);
-      led.start();
+      
 
     // Used to track usage of Kitbot code, please do not remove.
     HAL.report(tResourceType.kResourceType_Framework, 10);
@@ -266,6 +279,8 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    runRainbowPattern();
+      led.setData(ledBuffer);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -289,14 +304,19 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    startTime = Timer.getFPGATimestamp();
+
+    for (int i = 0; i < ledBuffer.getLength(); i++) {
+      ledBuffer.setHSV(i, 98, 255, 255); // HSV: (Hue, Saturation, Value)
+    }
   }
 
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    
+    for (int i = 0; i < ledBuffer.getLength(); i++) {
+      ledBuffer.setHSV(i, 98, 255, 255); // HSV: (Hue, Saturation, Value)
+    }
   }
 
   @Override
@@ -308,26 +328,52 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    startTime = Timer.getFPGATimestamp();
+
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
       currentTime = Timer.getFPGATimestamp();
-      if((currentTime - startTime) < 10){
-          runRainbowPattern();
-          led.setData(ledBuffer);
-      }else if((currentTime - startTime) < 30){
-          for (int i = 0; i < ledBuffer.getLength(); i++) {
-              ledBuffer.setHSV(i, 100, 255, 128); // HSV: (Hue, Saturation, Value)
-          }
-          led.setData(ledBuffer);
-      }else if((currentTime - startTime) < 50){
-          for (int i = 0; i < ledBuffer.getLength(); i++) {
-              ledBuffer.setHSV(i, 255, 100, 100); // HSV: (Hue, Saturation, Value)
-          }
-          led.setData(ledBuffer);
-      }
+      System.out.println("Time passed:" + (currentTime - startTime));
+      
+
+
+      // for (int i = 0; i < ledBuffer.getLength(); i++) {
+      //   ledBuffer.setHSV(i, (int) Math.round(currentTime - startTime), 255, 255); // HSV: (Hue, Saturation, Value)
+      // }99
+      // 150
+      //0
+
+
+    //  if((currentTime - startTime) < 30){
+    //     for (int i = 0; i < ledBuffer.getLength(); i++) {
+    //       ledBuffer.setHSV(i, 0, 255, 255); // HSV: (Hue, Saturation, Value)
+    //   }
+    //   led.setData(ledBuffer);
+    //   }else
+    //   if((currentTime - startTime) < 60){
+    //     for (int i = 0; i < ledBuffer.getLength(); i++) {
+    //       ledBuffer.setHSV(i, 120, 255, 255); // HSV: (Hue, Saturation, Value)
+    //   }
+    //   led.setData(ledBuffer);
+    //   }else  if((currentTime - startTime) < 120){
+    //       for (int i = 0; i < ledBuffer.getLength(); i++) {
+    //           ledBuffer.setHSV(i, 150, 255, 128); // HSV: (Hue, Saturation, Value)
+    //       }
+    //       led.setData(ledBuffer);
+    //   }else if((currentTime - startTime) < 130){
+    //       for (int i = 0; i < ledBuffer.getLength(); i++) {
+    //           ledBuffer.setHSV(i, 205, 255, 255); // HSV: (Hue, Saturation, Value)
+    //       }
+    //       led.setData(ledBuffer);
+    //   }else if((currentTime - startTime) < 135){
+    //     for (int i = 0; i < ledBuffer.getLength(); i++) {
+    //         ledBuffer.setHSV(i, 60, 255, 255); // HSV: (Hue, Saturation, Value)
+    //     }
+    //     led.setData(ledBuffer);
+    // }
   }
 
   @Override
