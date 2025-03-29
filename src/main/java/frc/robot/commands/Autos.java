@@ -31,7 +31,7 @@ public final class Autos {
     );
   }
 
-  public static final Command scoreRightIntake(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
+  public static final Command scoreProcessorIntake(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
     return new SequentialCommandGroup(
             driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(4),
             rollerSubsystem.runRoller(rollerSubsystem, () -> 0.8, () -> 0, () -> 0.5).withTimeout(1),
@@ -39,29 +39,51 @@ public final class Autos {
             driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.5).withTimeout(1),
             driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> 1, () -> 0.5).withTimeout(1.3),
             driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(3),
-            driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> -1, () -> 0.5).withTimeout(1.3),
-            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(3)
+            driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> -1, () -> 0.5).withTimeout(1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.7).withTimeout(4),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> -1, () -> 1).withTimeout(1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.7).withTimeout(4)
             );
   }
 
-  public static final Command leftScore(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
+  public static final Command scoreNoProcessorIntake(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
     return new SequentialCommandGroup(
-            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(7),
-            rollerSubsystem.runRoller(rollerSubsystem, () -> 0.9, () -> 0, () -> 0.5).withTimeout(1.5)
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(4),
+            rollerSubsystem.runRoller(rollerSubsystem, () -> 0.8, () -> 0, () -> 0.5).withTimeout(1),
+            rollerSubsystem.runRoller(rollerSubsystem, () -> 0, () -> 0, () -> 0.5).withTimeout(0.3),
+            driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.5).withTimeout(1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> -1, () -> 0.5).withTimeout(1.3),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(3),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> 1, () -> 0.5).withTimeout(1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.7).withTimeout(4),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> -1, () -> 1).withTimeout(1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.7).withTimeout(4)
     );
   }
 
-  public static final Command rightScoreCoral(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
+  public static final Command processorScoreProcessorIntake(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
     return new SequentialCommandGroup(
-      driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(3.5),
-      driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> 1, () -> 0.5).withTimeout(1),
-      driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(2),
-      rollerSubsystem.runRoller(rollerSubsystem, () -> 0.5, () -> 0, () -> 0.5).withTimeout(1.5),
-      driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.5).withTimeout(1),
-      driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> -1, () -> 0.5).withTimeout(1)
-            //driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(3),
-            //driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> 1, () -> 0.5).withTimeout(1.5),
-            //driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.5).withTimeout(5)
-            );
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.7).withTimeout(5),
+            rollerSubsystem.runRoller(rollerSubsystem, () -> 0.9, () -> 0, () -> 0.5).withTimeout(1),
+            rollerSubsystem.runRoller(rollerSubsystem, () -> 0, () -> 0, () -> 0.5).withTimeout(0.1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.5).withTimeout(1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> 1, () -> 0.5).withTimeout(0.9),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.7).withTimeout(4),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> -1, () -> 1).withTimeout(1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.7).withTimeout(4)
+    );
+  }
+
+  public static final Command noProcessorScoreNoProcessorIntake(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
+    return new SequentialCommandGroup(
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.7).withTimeout(5),
+            rollerSubsystem.runRoller(rollerSubsystem, () -> 0.9, () -> 0, () -> 0.5).withTimeout(1),
+            rollerSubsystem.runRoller(rollerSubsystem, () -> 0, () -> 0, () -> 0.5).withTimeout(0.1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.5).withTimeout(1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> 1, () -> 0.5).withTimeout(0.9),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.7).withTimeout(4),
+            driveSubsystem.driveArcade(driveSubsystem, () -> 0, () -> -1, () -> 1).withTimeout(1),
+            driveSubsystem.driveArcade(driveSubsystem, () -> -1, () -> 0.0, () -> 0.7).withTimeout(4)
+    );
   }
 }

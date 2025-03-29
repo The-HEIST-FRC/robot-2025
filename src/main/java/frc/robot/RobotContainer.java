@@ -37,10 +37,13 @@ public class RobotContainer {
     // Set the options to show up in the Dashboard for selecting auto modes. If you
     // add additional auto modes you can add additional lines here with
     // autoChooser.addOption
-    autoChooser.addOption("Middle", Autos.exampleAuto(driveSubsystem, rollerSubsystem));
-    autoChooser.addOption("ScoreRightIntake", Autos.scoreRightIntake(driveSubsystem, rollerSubsystem));
-    autoChooser.addOption("ForwardNoScore", Autos.goForwardNoScore(driveSubsystem, rollerSubsystem));
     autoChooser.setDefaultOption("Sides", Autos.rightScore(driveSubsystem, rollerSubsystem));
+    autoChooser.addOption("Middle", Autos.exampleAuto(driveSubsystem, rollerSubsystem));
+    autoChooser.addOption("ScoreProcessorIntake", Autos.scoreProcessorIntake(driveSubsystem, rollerSubsystem));
+    autoChooser.addOption("ScoreNoProcessorIntake", Autos.scoreNoProcessorIntake(driveSubsystem, rollerSubsystem));
+    autoChooser.addOption("ProcessorScoreProcessorIntake", Autos.processorScoreProcessorIntake(driveSubsystem, rollerSubsystem));
+    autoChooser.addOption("NoProcessorScoreNoProcessorIntake", Autos.noProcessorScoreNoProcessorIntake(driveSubsystem, rollerSubsystem));
+    autoChooser.addOption("ForwardNoScore", Autos.goForwardNoScore(driveSubsystem, rollerSubsystem));
 
     //autoChooser.addOption("Rightscorecoral", Autos.rightScoreCoral(driveSubsystem, rollerSubsystem));
   
