@@ -279,8 +279,7 @@ private void runYellowGreenPattern() {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    runRainbowPattern();
-      led.setData(ledBuffer);
+  
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -290,6 +289,8 @@ private void runYellowGreenPattern() {
 
   @Override
   public void disabledPeriodic() {
+    runRainbowPattern();
+      led.setData(ledBuffer);
   }
 
   /**
@@ -347,33 +348,33 @@ private void runYellowGreenPattern() {
       //0
 
 
-    //  if((currentTime - startTime) < 30){
-    //     for (int i = 0; i < ledBuffer.getLength(); i++) {
-    //       ledBuffer.setHSV(i, 0, 255, 255); // HSV: (Hue, Saturation, Value)
-    //   }
-    //   led.setData(ledBuffer);
-    //   }else
-    //   if((currentTime - startTime) < 60){
-    //     for (int i = 0; i < ledBuffer.getLength(); i++) {
-    //       ledBuffer.setHSV(i, 120, 255, 255); // HSV: (Hue, Saturation, Value)
-    //   }
-    //   led.setData(ledBuffer);
-    //   }else  if((currentTime - startTime) < 120){
-    //       for (int i = 0; i < ledBuffer.getLength(); i++) {
-    //           ledBuffer.setHSV(i, 150, 255, 128); // HSV: (Hue, Saturation, Value)
-    //       }
-    //       led.setData(ledBuffer);
-    //   }else if((currentTime - startTime) < 130){
-    //       for (int i = 0; i < ledBuffer.getLength(); i++) {
-    //           ledBuffer.setHSV(i, 205, 255, 255); // HSV: (Hue, Saturation, Value)
-    //       }
-    //       led.setData(ledBuffer);
-    //   }else if((currentTime - startTime) < 135){
-    //     for (int i = 0; i < ledBuffer.getLength(); i++) {
-    //         ledBuffer.setHSV(i, 60, 255, 255); // HSV: (Hue, Saturation, Value)
-    //     }
-    //     led.setData(ledBuffer);
-    // }
+     if((currentTime - startTime) < 30){
+        for (int i = 0; i < ledBuffer.getLength(); i++) {
+          ledBuffer.setHSV(i, 0, 255, 255); // HSV: (Hue, Saturation, Value)
+      }
+      led.setData(ledBuffer);
+      }else
+      if((currentTime - startTime) < 60){
+        for (int i = 0; i < ledBuffer.getLength(); i++) {
+          ledBuffer.setHSV(i, 120, 255, 255); // HSV: (Hue, Saturation, Value)
+      }
+      led.setData(ledBuffer);
+      }else  if((currentTime - startTime) < 120){
+          for (int i = 0; i < ledBuffer.getLength(); i++) {
+              ledBuffer.setHSV(i, 150, 255, 128); // HSV: (Hue, Saturation, Value)
+          }
+          led.setData(ledBuffer);
+      }else if((currentTime - startTime) < 130){
+          for (int i = 0; i < ledBuffer.getLength(); i++) {
+              ledBuffer.setHSV(i, 205, 255, 255); // HSV: (Hue, Saturation, Value)
+          }
+          led.setData(ledBuffer);
+      }else if((currentTime - startTime) < 135){
+        for (int i = 0; i < ledBuffer.getLength(); i++) {
+            ledBuffer.setHSV(i, 60, 255, 255); // HSV: (Hue, Saturation, Value)
+        }
+        led.setData(ledBuffer);
+    }
   }
 
   @Override
