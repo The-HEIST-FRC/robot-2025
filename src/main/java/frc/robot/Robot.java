@@ -24,6 +24,9 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.apriltag.AprilTagDetection;
 import edu.wpi.first.apriltag.AprilTagDetector;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
@@ -74,6 +77,8 @@ public class Robot extends TimedRobot {
   private final Spark leftMotor2 = new Spark(1);
   private final Spark rightMotor1 = new Spark(2);
   private final Spark rightMotor2 = new Spark(3);
+
+  TalonSRX myTalon = new TalonSRX(3);
 
   public void BothLeftMotors(double speed) {
     // Ensure speed is between 0 and 1
@@ -130,6 +135,8 @@ private void runYellowGreenPattern() {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
+
+    myTalon.set(ControlMode.PercentOutput, 30);
       
 
     // Used to track usage of Kitbot code, please do not remove.
