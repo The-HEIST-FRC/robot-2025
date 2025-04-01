@@ -39,7 +39,7 @@ public class RobotContainer {
     autoChooser.addOption("Middle", Autos.exampleAuto(driveSubsystem, rollerSubsystem));
     autoChooser.addOption("ScoreRightIntake", Autos.scoreRightIntake(driveSubsystem, rollerSubsystem));
     autoChooser.addOption("ForwardNoScore", Autos.goForwardNoScore(driveSubsystem, rollerSubsystem));
-    autoChooser.addOption("RotateAndGo", Autos.rotateAndGo(driveSubsystem, rollerSubsystem));
+    //autoChooser.addOption("RotateAndGo", Autos.rotateAndGo(driveSubsystem, rollerSubsystem));
     autoChooser.setDefaultOption("Sides", Autos.rightScore(driveSubsystem, rollerSubsystem));
 
     //autoChooser.addOption("Rightscorecoral", Autos.rightScoreCoral(driveSubsystem, rollerSubsystem));

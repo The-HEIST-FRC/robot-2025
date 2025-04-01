@@ -116,21 +116,21 @@ public class CANDriveSubsystem extends SubsystemBase {
   }
 
 
-  public Command rotateTo(double targetAngle, AHRS navx) {
-    return Commands.run(() -> {
-              double currentAngle = navx.getYaw(); // Get current yaw angle
-              double error = targetAngle - currentAngle; // Calculate error
-              double kP = 0.01; // Proportional control constant (adjust as needed)
+  // public Command rotateTo(double targetAngle, AHRS navx) {
+  //   return Commands.run(() -> {
+  //             double currentAngle = navx.getYaw(); // Get current yaw angle
+  //             double error = targetAngle - currentAngle; // Calculate error
+  //             double kP = 0.01; // Proportional control constant (adjust as needed)
 
-              double turnSpeed = Math.copySign(Math.min(0.7, Math.abs(error) * kP), error); // Limit max speed to 0.7
+  //             double turnSpeed = Math.copySign(Math.min(0.7, Math.abs(error) * kP), error); // Limit max speed to 0.7
 
-              // Rotate the robot
-              drive.arcadeDrive(0, turnSpeed);
-            }, this)
-            .until(() -> Math.abs(targetAngle - navx.getYaw()) < 5) // Stop when within 5 degrees
-            .andThen(() -> System.out.println(navx.getYaw()))
-            .andThen(() -> drive.arcadeDrive(0, 0)); // Ensure the robot stops
-  }
+  //             // Rotate the robot
+  //             drive.arcadeDrive(0, turnSpeed);
+  //           }, this)
+  //           .until(() -> Math.abs(targetAngle - navx.getYaw()) < 5) // Stop when within 5 degrees
+  //           .andThen(() -> System.out.println(navx.getYaw()))
+  //           .andThen(() -> drive.arcadeDrive(0, 0)); // Ensure the robot stops
+  // }
   // Command to drive the robot with joystick inputs
   public Command driveArcade(
       CANDriveSubsystem driveSubsystem, DoubleSupplier xSpeed, DoubleSupplier zRotation, DoubleSupplier robotSpeed) {

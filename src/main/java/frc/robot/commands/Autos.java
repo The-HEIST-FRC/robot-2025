@@ -53,21 +53,21 @@ public final class Autos {
     );
   }
 
-  public static final Command rotateAndGo(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
+  // public static final Command rotateAndGo(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
 
-    AHRS navx = new AHRS(SPI.Port.kMXP);;
+  //   AHRS navx = new AHRS(SPI.Port.kMXP);;
 
-    try {
-      navx = new AHRS(SPI.Port.kMXP);  // Use SPI (default)
-    } catch (RuntimeException ex) {
-      System.out.println("Error instantiating NavX: " + ex.getMessage());
-    }
-    return new SequentialCommandGroup(
-            driveSubsystem.rotateTo(180, navx),
-            driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(3),
-            rollerSubsystem.runRoller(rollerSubsystem, () -> 0.9, () -> 0, () -> 0.5).withTimeout(1.5)
-    );
-  }
+  //   try {
+  //     navx = new AHRS(SPI.Port.kMXP);  // Use SPI (default)
+  //   } catch (RuntimeException ex) {
+  //     System.out.println("Error instantiating NavX: " + ex.getMessage());
+  //   }
+  //   return new SequentialCommandGroup(
+  //           driveSubsystem.rotateTo(180, navx),
+  //           driveSubsystem.driveArcade(driveSubsystem, () -> 1, () -> 0.0, () -> 0.5).withTimeout(3),
+  //           rollerSubsystem.runRoller(rollerSubsystem, () -> 0.9, () -> 0, () -> 0.5).withTimeout(1.5)
+  //   );
+  // }
 
   public static final Command rightScoreCoral(CANDriveSubsystem driveSubsystem, CANRollerSubsystem rollerSubsystem) {
     return new SequentialCommandGroup(
