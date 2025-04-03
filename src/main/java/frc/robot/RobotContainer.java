@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.Autos;
+import frc.robot.subsystems.CANAlgaeSubsystem;
 import frc.robot.subsystems.CANDriveSubsystem;
 import frc.robot.subsystems.CANRollerSubsystem;
 
@@ -24,6 +25,7 @@ public class RobotContainer {
   // The robot's subsystems
   public final CANDriveSubsystem driveSubsystem = new CANDriveSubsystem();
   public final CANRollerSubsystem rollerSubsystem = new CANRollerSubsystem();
+  public final CANAlgaeSubsystem algaeSubsystem = new CANAlgaeSubsystem();
 
   // The autonomous chooser
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
