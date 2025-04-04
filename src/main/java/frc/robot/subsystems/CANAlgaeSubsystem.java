@@ -20,7 +20,7 @@ public class CANAlgaeSubsystem extends SubsystemBase {
   private final SparkMax algaeMotor;
 
   public static final class AlgaeConstants {
-    public static final int ALGAE_MOTOR_ID = 5;
+    public static final int ALGAE_MOTOR_ID = 6;
     public static final int ALGAE_MOTOR_CURRENT_LIMIT = 60;
     public static final double ALGAE_MOTOR_VOLTAGE_COMP = 10;
     public static final double ALGAE_EJECT_VALUE = 0.44;
@@ -50,19 +50,17 @@ public class CANAlgaeSubsystem extends SubsystemBase {
   }
 
 
-  public Command moveCoral() {
-    return Commands.runOnce(() -> algaeMotor.set(-0.7), this)
+  public Command eject() {
+    return Commands.runOnce(() -> algaeMotor.set(0.7), this)
             .andThen(Commands.waitSeconds(1.5))  // Adjust time for a full 180 turn
-            .andThen(() -> algaeMotor.set(-0.3))
-            .andThen(Commands.waitSeconds(1.2))  // Adjust time for a full 180 turn
             .andThen(() -> algaeMotor.set(0));  // Stop the robot after turning
   }
 
   // Command to run the roller with joystick inputs
   public Command runAlgae(
-          CANAlgaeSubsystem rollerSubsystem, DoubleSupplier forward, DoubleSupplier reverse, DoubleSupplier rollerSpeed) {
+          CANAlgaeSubsystem algaeSubsystem, DoubleSupplier forward, DoubleSupplier reverse, DoubleSupplier rollerSpeed) {
     return Commands.run(
-        () -> algaeMotor.set((forward.getAsDouble() - reverse.getAsDouble()) * rollerSpeed.getAsDouble()), rollerSubsystem);
+        () -> algaeMotor.set((forward.getAsDouble() - reverse.getAsDouble()) * rollerSpeed.getAsDouble()), algaeSubsystem);
   }
 
 }

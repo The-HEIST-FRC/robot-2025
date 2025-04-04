@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
   private final Spark rightMotor1 = new Spark(2);
   private final Spark rightMotor2 = new Spark(3);
 
-  TalonSRX myTalon = new TalonSRX(3);
+  // TalonSRX myTalon = new TalonSRX(3);
 
   public void BothLeftMotors(double speed) {
     // Ensure speed is between 0 and 1
@@ -136,7 +136,7 @@ private void runYellowGreenPattern() {
     m_robotContainer = new RobotContainer();
 
 
-    myTalon.set(ControlMode.PercentOutput, 30);
+    // myTalon.set(ControlMode.PercentOutput, 30);
       
 
     // Used to track usage of Kitbot code, please do not remove.
@@ -346,13 +346,6 @@ private void runYellowGreenPattern() {
       currentTime = Timer.getFPGATimestamp();
       System.out.println("Time passed:" + (currentTime - startTime));
       
-
-
-      // for (int i = 0; i < ledBuffer.getLength(); i++) {
-      //   ledBuffer.setHSV(i, (int) Math.round(currentTime - startTime), 255, 255); // HSV: (Hue, Saturation, Value)
-      // }99
-      // 150
-      //0
 
 
      if((currentTime - startTime) < 30){
