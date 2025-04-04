@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -19,12 +21,17 @@ import java.util.function.DoubleSupplier;
 public class CANAlgaeSubsystem extends SubsystemBase {
   private final SparkMax algaeMotor;
 
+
   public static final class AlgaeConstants {
     public static final int ALGAE_MOTOR_ID = 6;
+    public static final int MOVER_MOTOR_ID = 3;
     public static final int ALGAE_MOTOR_CURRENT_LIMIT = 60;
     public static final double ALGAE_MOTOR_VOLTAGE_COMP = 10;
     public static final double ALGAE_EJECT_VALUE = 0.44;
   }
+
+  TalonSRX mover = new TalonSRX(AlgaeConstants.MOVER_MOTOR_ID);
+
 
   public CANAlgaeSubsystem() {
     // Set up the roller motor as a brushed motor
@@ -54,6 +61,19 @@ public class CANAlgaeSubsystem extends SubsystemBase {
     return Commands.runOnce(() -> algaeMotor.set(0.7), this)
             .andThen(Commands.waitSeconds(1.5))  // Adjust time for a full 180 turn
             .andThen(() -> algaeMotor.set(0));  // Stop the robot after turning
+  }
+
+
+  public Command lower() {
+    return Commands.runOnce(() -> mover.set(ControlMode.PercentOutput, 30), this)
+            .andThen(Commands.waitSeconds(1.5))  // Adjust time for a full 180 turn
+            .andThen(() -> mover.set(ControlMode.PercentOutput, 0));  // Stop the robot after turning
+  }
+
+  public Command raise() {
+    return Commands.runOnce(() -> mover.set(ControlMode.PercentOutput, -30), this)
+            .andThen(Commands.waitSeconds(1.5))  // Adjust time for a full 180 turn
+            .andThen(() -> mover.set(ControlMode.PercentOutput, 0));  // Stop the robot after turning
   }
 
   // Command to run the roller with joystick inputs

@@ -68,7 +68,10 @@ public class Controls {
 
 
       new Trigger(() -> driverController.a().getAsBoolean()).onTrue(bot.algaeSubsystem.eject());
-      new Trigger(() -> driverController.x().getAsBoolean()).onTrue(bot.driveSubsystem.handbrake());
+      new Trigger(() -> driverController.y().getAsBoolean()).onTrue(bot.algaeSubsystem.lower());
+      new Trigger(() -> driverController.x().getAsBoolean()).onTrue(bot.algaeSubsystem.raise());
+
+      new Trigger(() -> driverController.povUp().getAsBoolean()).onTrue(bot.driveSubsystem.handbrake());
       new Trigger(() -> driverController.povLeft().getAsBoolean()).onTrue(bot.rollerSubsystem.moveCoral());
 
   }
