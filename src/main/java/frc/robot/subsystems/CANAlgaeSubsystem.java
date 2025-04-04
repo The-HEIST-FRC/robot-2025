@@ -23,8 +23,8 @@ public class CANAlgaeSubsystem extends SubsystemBase {
 
 
   public static final class AlgaeConstants {
-    public static final int ALGAE_MOTOR_ID = 6;
-    public static final int MOVER_MOTOR_ID = 3;
+    public static final int ALGAE_MOTOR_ID = 3;
+    public static final int MOVER_MOTOR_ID = 6;
     public static final int ALGAE_MOTOR_CURRENT_LIMIT = 60;
     public static final double ALGAE_MOTOR_VOLTAGE_COMP = 10;
     public static final double ALGAE_EJECT_VALUE = 0.44;
