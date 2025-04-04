@@ -60,14 +60,13 @@ public class Controls {
     bot.algaeSubsystem.setDefaultCommand(
             bot.algaeSubsystem.runAlgae(
                     bot.algaeSubsystem,
-                    () -> (driverController.b().getAsBoolean() ? -1 : 0),
-                    () -> 0,
+                    () -> (driverController.a().getAsBoolean() ? 1 : 0), //eject
+                    () -> (driverController.b().getAsBoolean() ? 1 : 0), //intake
                     () -> (driverController.leftBumper().getAsBoolean() ? 0.7 : 0.5)
             )
     );
 
 
-      new Trigger(() -> driverController.a().getAsBoolean()).onTrue(bot.algaeSubsystem.eject());
       new Trigger(() -> driverController.y().getAsBoolean()).onTrue(bot.algaeSubsystem.lower());
       new Trigger(() -> driverController.x().getAsBoolean()).onTrue(bot.algaeSubsystem.raise());
 

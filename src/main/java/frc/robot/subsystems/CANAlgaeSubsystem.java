@@ -27,13 +27,14 @@ public class CANAlgaeSubsystem extends SubsystemBase {
     public static final int MOVER_MOTOR_ID = 6;
     public static final int ALGAE_MOTOR_CURRENT_LIMIT = 60;
     public static final double ALGAE_MOTOR_VOLTAGE_COMP = 10;
-    public static final double ALGAE_EJECT_VALUE = 0.44;
   }
 
   TalonSRX mover = new TalonSRX(AlgaeConstants.MOVER_MOTOR_ID);
 
-
   public CANAlgaeSubsystem() {
+
+    System.out.println(mover);
+
     // Set up the roller motor as a brushed motor
     algaeMotor = new SparkMax(AlgaeConstants.ALGAE_MOTOR_ID, MotorType.kBrushless);
 
@@ -65,12 +66,14 @@ public class CANAlgaeSubsystem extends SubsystemBase {
 
 
   public Command lower() {
+    System.out.println("Lower");
     return Commands.runOnce(() -> mover.set(ControlMode.PercentOutput, 30), this)
             .andThen(Commands.waitSeconds(1.5))  // Adjust time for a full 180 turn
             .andThen(() -> mover.set(ControlMode.PercentOutput, 0));  // Stop the robot after turning
   }
 
   public Command raise() {
+    System.out.println("Raise");
     return Commands.runOnce(() -> mover.set(ControlMode.PercentOutput, -30), this)
             .andThen(Commands.waitSeconds(1.5))  // Adjust time for a full 180 turn
             .andThen(() -> mover.set(ControlMode.PercentOutput, 0));  // Stop the robot after turning
